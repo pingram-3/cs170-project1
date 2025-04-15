@@ -1,4 +1,4 @@
-from .tree import helper
+from .tree import Node, Tree
 
 def main():
     print ("Hello from the main file")
