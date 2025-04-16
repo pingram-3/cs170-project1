@@ -16,7 +16,7 @@ def main():
     user_choice = int(input())
 
     if (user_choice == 1):
-        pass  # logic to solve default puzzle goes here
+        print('Using default puzzle grid...')
     elif (user_choice == 2):
         print('Enter your puzzle, use a zero to represent the blank')
         puzzle_grid = []
