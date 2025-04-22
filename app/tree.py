@@ -1,6 +1,7 @@
 from enum import Enum
 from queue import PriorityQueue
-from problem import *
+from .problem import *
+
 
 #For applying moves to the problem class
 class Swap(Enum):
@@ -23,9 +24,10 @@ class Node:
 
     def __init__(self, problem, parent=None, cost=0):
         self.problem = problem  # state will be a NxN grid
-        self.parent = parent # store where we came from
+        self.parent = parent  # store where we came from
         self.cost = cost  # cost it takes to get to the current node
-        self.children = [] # store what problem states we can visit from current problem state
+        self.children = [
+        ]  # store what problem states we can visit from current problem state
 
     # appends a child
     def append_child(self, new_node):
@@ -41,12 +43,13 @@ class Node:
             path.append(current.state)
             current = current.parent
         return path[::-1]  # From root to current node
-    
+
     def expand(self):
         for move in Swap:
             new_state = Problem.apply_swap(self.problem, move)
             child = Node(Problem(new_state))
             self.append_child(child)
+
 
 class Tree:
 

@@ -1,6 +1,7 @@
 class InvalidMoveError(Exception):
     pass
 
+
 class Problem:
     GOAL_STATE = None
 
@@ -20,7 +21,7 @@ class Problem:
                 row += [num]
                 num += 1
             goal_state += [row]
-        goal_state[n - 1].append('*')
+        goal_state[n - 1].append(0)
 
         return goal_state
 
@@ -36,6 +37,15 @@ class Problem:
             return copy_state
 
         raise InvalidMoveError(f"Error: [{newi}][{newj}] out of bounds")
+
+    def is_goal(self, grid):
+        return True if grid == self.GOAL_STATE else False
     
-    def is_goal(self):
-        return True if self.state == self.GOAL_STATE else False
+    # returns the index of the blank space
+    def find_blank(self, grid):
+        for r in range(len(grid)):
+            for c in range(len(grid)):
+                if grid[r][c] == 0:
+                    return (r, c)
+        raise InvalidMoveError("Cannot find blank space")
+            

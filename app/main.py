@@ -1,11 +1,8 @@
 from .tree import Node, Tree
-
+from .heuristics import *
+from .astar import *
 
 def main():
-    print("Hello from the main file")
-
-
-if __name__ == "__main__":
     n = 3
     puzzle_grid = [
         [1, 2, 3],
@@ -54,9 +51,10 @@ if __name__ == "__main__":
     # logic to solve puzzle goes here
     if (user_choice == 1):
         # Uniform Cost Search code goes here
-        pass
+        A_star(puzzle_grid, return_zero)
     elif (user_choice == 2):
         # A* with the Misplaced Tile heuristic code goes here
+        A_star(puzzle_grid, heuristic_misplaced_tile)
         pass
     elif (user_choice == 3):
         # A* with the Euclidean distance heuristic code goes here
@@ -64,3 +62,7 @@ if __name__ == "__main__":
     else:
         print('Invalid choice, terminating program')
         return
+
+
+if __name__ == "__main__":
+    main()
