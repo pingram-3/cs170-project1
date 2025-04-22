@@ -38,6 +38,10 @@ def generate_goal(n):
 
     return goal_state
 
+# converts grid to tuple because disctionaries can't hash lists
+def grid_to_tuple(grid):
+    return tuple(tuple(row) for row in grid)
+
 
 def A_star(grid, heuristic):
     # initialize min heap, make the heap sort by (heuristic value) + (distance (number of moves) from starting grid)
@@ -47,6 +51,9 @@ def A_star(grid, heuristic):
     # initialize visited nodes list
     visited = []
 
+    # so we can find the path in the end
+    backtrack = {grid_to_tuple(grid) : None}
+
     # add initial grid to frontier
     heapq.heappush(frontier, (heuristic(grid), 0, grid))
 
@@ -54,16 +61,34 @@ def A_star(grid, heuristic):
         # current = pop node off heap
         current = heapq.heappop(frontier)
 
+        if current[2] in visited:
+            continue
+        # add current node to visited list
+        visited.append(current[2])
+
         # TODO REMOVE THIS
-        for row in current[2]:
-            print(row)
-        print()
+        # for row in current[2]:
+        #     print(row)
+        # print()
 
         if is_goal(current[2]):
             # now that we found the goal state, we just backtrack to find the path from start to finish
-            print("Goal Found")
-            for row in current:
-                print(row)
+            path = [current[2]]
+            curr_parent = backtrack[grid_to_tuple(current[2])]
+            while curr_parent != None:
+                path.append(curr_parent)
+                curr_parent = backtrack[grid_to_tuple(curr_parent)]
+
+            path.reverse()
+            for grid in path:
+                for row in grid:
+                    print(row)
+                print()
+            
+            # print("Goal Found")
+            # for row in current:
+            #     print(row)
+            
             return
 
         # generate four new grids based on current node (in the same way as earlier)
@@ -76,16 +101,16 @@ def A_star(grid, heuristic):
                         current[0] + 1, 
                         apply_swap(current[2], blank_coords[0], blank_coords[1], move.value))
 
-                # TODO update tentative distances to children
-                for i in range(len(frontier)):
-                    if frontier[i][2] == child[2]:
-                        if frontier[i][1] > child[1]:
-                            frontier[i][0], frontier[i][1] = child[0], child[1]
+                # # TODO update frontier distances to children
+                # for i in range(len(frontier)):
+                #     if frontier[i][2] == child[2]:
+                #         if frontier[i][1] > child[1]:
+                #             frontier[i][0], frontier[i][1] = child[0], child[1]
 
                 if child[2] not in visited:
                     heapq.heappush(frontier, child)
-                # add current node to visited list
-                visited.append(current[2])
+                    backtrack[grid_to_tuple(child[2])] = current[2]
+            
             except:
                 pass
         
