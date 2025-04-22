@@ -1,5 +1,6 @@
 from enum import Enum
-
+from queue import PriorityQueue
+from problem import *
 
 #For applying moves to the problem class
 class Swap(Enum):
@@ -20,12 +21,11 @@ class Swap(Enum):
 
 class Node:
 
-    def __init__(self, state):
-        self.state = state  # state will be a NxN grid
-        self.children = [
-        ]  # I'm assuming we are not using a binary tree, so we can have unlimited children
-        self.parent = None
-        self.cost = None  # cost it takes to get to the current node
+    def __init__(self, problem, parent=None, cost=0):
+        self.problem = problem  # state will be a NxN grid
+        self.parent = parent # store where we came from
+        self.cost = cost  # cost it takes to get to the current node
+        self.children = [] # store what problem states we can visit from current problem state
 
     # appends a child
     def append_child(self, new_node):
@@ -41,10 +41,22 @@ class Node:
             path.append(current.state)
             current = current.parent
         return path[::-1]  # From root to current node
+    
+    def expand(self):
+        for move in Swap:
+            new_state = Problem.apply_swap(self.problem, move)
+            child = Node(Problem(new_state))
+            self.append_child(child)
 
-
-# honestly this class is kind of redundant right now since you only really need the node class
 class Tree:
 
     def __init__(self, initial_state):
         self.root = Node(initial_state)
+
+    def a_star(self, heuristic):
+        frontier = PriorityQueue()
+        explored = set()
+        frontier.put((0, self.root))
+
+        while not frontier.empty():
+            current_state = frontier.get()[1]
