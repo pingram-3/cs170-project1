@@ -2,6 +2,10 @@ from .tree import Node, Tree
 
 
 def main():
+    print("Hello from the main file")
+
+
+if __name__ == "__main__":
     n = 3
     puzzle_grid = [
         [1, 2, 3],
@@ -60,7 +64,3 @@ def main():
     else:
         print('Invalid choice, terminating program')
         return
-
-
-if __name__ == '__main__':
-    main()
