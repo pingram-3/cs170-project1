@@ -1,11 +1,27 @@
-class Problem:
+class InvalidMoveError(Exception):
+    pass
 
-    #Constant goal state
-    GOAL_STATE = ((1, 2, 3), (4, 5, 6), (7, 8, '*'))
+
+class Problem:
 
     #grid: list of lists describing current state
     def __init__(self, grid):
         self.initial_state = grid
+        self.GOAL_STATE = self.generate_goal(len(grid[0]))
+
+    #Generalized function for generating the goal_state
+    def generate_goal(self, n):
+        goal_state = []
+        num = 1
+        for i in range(0, n):
+            row = []
+            for _ in range(0, n if i < n - 1 else n - 1):
+                row += [num]
+                num += 1
+            goal_state += [row]
+        goal_state[n - 1].append('*')
+
+        return goal_state
 
     #Return a copy of initial_state with directional swap applied to initial_state[i][j]
     def apply_swap(self, i, j, dir):
@@ -17,3 +33,5 @@ class Problem:
             copy_state[i][j], copy_state[newi][newj] = copy_state[newi][
                 newj], copy_state[i][j]
             return copy_state
+
+        raise InvalidMoveError(f"Error: [{newi}][{newj}] out of bounds")
