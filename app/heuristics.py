@@ -9,7 +9,8 @@ def heuristic_misplaced_tile(grid):
     sum = 0
     for r in range(len(grid)):
         for c in range(len(grid[0])):
-            if GOAL_STATE[r][c] != grid[r][c] and curr_num > 0:
+            curr_num = grid[r][c]
+            if GOAL_STATE[r][c] != curr_num and curr_num > 0:
                 sum += 1
     return sum
 
