@@ -54,7 +54,7 @@ def A_star(grid, heuristic):
         # current = pop node off heap
         current = heapq.heappop(frontier)
 
-        # REMOVE THIS
+        # TODO REMOVE THIS
         for row in current[2]:
             print(row)
         print()
@@ -67,14 +67,14 @@ def A_star(grid, heuristic):
             return
 
         # generate four new grids based on current node (in the same way as earlier)
-        blank_coords = find_blank(grid)
+        blank_coords = find_blank(current[2])
         
         for move in Swap:
             try:
                 # if a new grid already exists in the graph (check the heap or something), just update the distance. otherwise, store it in the heap if it is not in the visited list
                 child =  (heuristic(current[2]) + current[0], 
                         current[0] + 1, 
-                        apply_swap(grid, blank_coords[0], blank_coords[1], move.value))
+                        apply_swap(current[2], blank_coords[0], blank_coords[1], move.value))
 
                 # TODO update tentative distances to children
                 for i in range(len(frontier)):
