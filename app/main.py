@@ -58,6 +58,7 @@ def main():
         pass
     elif (user_choice == 3):
         # A* with the Euclidean distance heuristic code goes here
+        A_star(puzzle_grid, heuristic_euclidean_distance)
         pass
     else:
         print('Invalid choice, terminating program')

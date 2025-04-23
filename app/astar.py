@@ -57,6 +57,9 @@ def A_star(grid, heuristic):
     # add initial grid to frontier
     heapq.heappush(frontier, (heuristic(grid), 0, grid))
 
+    # counts the number nodes expanded during search
+    steps = 0
+
     while (len(frontier) != 0):
         # current = pop node off heap
         current = heapq.heappop(frontier)
@@ -65,6 +68,7 @@ def A_star(grid, heuristic):
             continue
         # add current node to visited list
         visited.append(current[2])
+        steps += 1
 
         # TODO REMOVE THIS
         # for row in current[2]:
@@ -88,6 +92,7 @@ def A_star(grid, heuristic):
             # print("Goal Found")
             # for row in current:
             #     print(row)
+            print(f"Steps: {steps}")
             
             return
 
