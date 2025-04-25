@@ -20,7 +20,10 @@ def A_star(grid, heuristic):
 
     goal_state = generate_goal(len(grid))
 
+    max_frontier_size = 0
+
     while frontier:
+        max_frontier_size = max(len(frontier), max_frontier_size)
         current = heapq.heappop(frontier)
         current_grid_tuple = grid_to_tuple(
             current.grid)  # converted to tuple so we can hash it
@@ -55,6 +58,7 @@ def A_star(grid, heuristic):
                 print()
             print(f"Nodes Expanded: {num_expanded}")
             print(f"Number of steps in optimal solution: {len(path) - 1}")
+            print(f"Max frontier size: {max_frontier_size}")
             return
 
         # finds the coordinates of the empty space in the tiles

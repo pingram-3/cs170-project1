@@ -4,7 +4,7 @@ from .astar import *
 
 def main():
     # change n to change the dimensions of the grid
-    n = 4
+    n = 3
     #  this is the default puzzle grid, the user can choose a different puzzle if they want
     puzzle_grid = [
         [1, 2, 3],
