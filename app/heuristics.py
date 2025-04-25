@@ -32,5 +32,6 @@ def heuristic_euclidean_distance(grid):
                 sum += goal_offset_c + goal_offset_r
     return sum
 
+
 def return_zero(grid):
     return 0

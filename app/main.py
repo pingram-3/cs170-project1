@@ -1,9 +1,11 @@
-from .tree import Node, Tree
 from .heuristics import *
 from .astar import *
 
+
 def main():
+    # change n to change the dimensions of the grid
     n = 3
+    #  this is the default puzzle grid, the user can choose a different puzzle if they want
     puzzle_grid = [
         [1, 2, 3],
         [4, 8, 0],
@@ -48,16 +50,14 @@ def main():
     print('(3) A* with the Euclidean distance heuristic.')
     user_choice = int(input())
 
-    # logic to solve puzzle goes here
     if (user_choice == 1):
-        # Uniform Cost Search code goes here
-        A_star(puzzle_grid, return_zero)
+        # uniform cost search
+        zero = lambda grid : 0
+        A_star(puzzle_grid, zero)
     elif (user_choice == 2):
-        # A* with the Misplaced Tile heuristic code goes here
         A_star(puzzle_grid, heuristic_misplaced_tile)
         pass
     elif (user_choice == 3):
-        # A* with the Euclidean distance heuristic code goes here
         A_star(puzzle_grid, heuristic_euclidean_distance)
         pass
     else:
