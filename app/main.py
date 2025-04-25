@@ -33,7 +33,7 @@ def main():
                     f'Invalid row size of {len(user_input)}, expected: {n}. Terminating program.'
                 )
                 return
-            temp_row = [int(num) for num in user_input]
+            temp_row = [int(num) for num in user_input] # converts strings to ints
             puzzle_grid.append(temp_row)
     else:
         print('Invalid choice, terminating program')
@@ -51,7 +51,7 @@ def main():
     user_choice = int(input())
 
     if (user_choice == 1):
-        # uniform cost search
+        # uniform cost search, heuristics always return 0
         A_star(puzzle_grid, lambda grid: 0)
     elif (user_choice == 2):
         A_star(puzzle_grid, heuristic_misplaced_tile)

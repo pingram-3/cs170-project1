@@ -3,6 +3,8 @@ from .heuristics import *
 from .helpers import *
 from .node import *
 
+MAX_FRONTIER_SIZE = 10000
+
 
 def A_star(grid, heuristic):
     # frontier list is a min heap
@@ -20,10 +22,14 @@ def A_star(grid, heuristic):
 
     goal_state = generate_goal(len(grid))
 
-    max_frontier_size = 0
+    largest_frontier_size = 0
 
     while frontier:
-        max_frontier_size = max(len(frontier), max_frontier_size)
+        if len(frontier) > MAX_FRONTIER_SIZE:
+            print(f"The max queue size of {MAX_FRONTIER_SIZE} has been reached. This problem may be impossible.")
+            return
+        largest_frontier_size = max(len(frontier), largest_frontier_size)
+
         current = heapq.heappop(frontier)
         current_grid_tuple = grid_to_tuple(
             current.grid)  # converted to tuple so we can hash it
@@ -58,7 +64,7 @@ def A_star(grid, heuristic):
                 print()
             print(f"Nodes Expanded: {num_expanded}")
             print(f"Number of steps in optimal solution: {len(path) - 1}")
-            print(f"Max frontier size: {max_frontier_size}")
+            print(f"Max frontier size: {largest_frontier_size}")
             return
 
         # finds the coordinates of the empty space in the tiles

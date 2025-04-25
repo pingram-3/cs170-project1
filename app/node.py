@@ -1,5 +1,5 @@
+# nodes to be used in the a* code
 class Node:
-
     def __init__(self, f, g, grid, parent):
         self.f = f  # g + h
         self.g = g  # distance from starting node
