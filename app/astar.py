@@ -26,7 +26,9 @@ def A_star(grid, heuristic):
 
     while frontier:
         if len(frontier) > MAX_FRONTIER_SIZE:
-            print(f"The max queue size of {MAX_FRONTIER_SIZE} has been reached. This problem may be impossible.")
+            print(
+                f"The max queue size of {MAX_FRONTIER_SIZE} has been reached. This problem may be impossible."
+            )
             return
         largest_frontier_size = max(len(frontier), largest_frontier_size)
 

@@ -33,7 +33,8 @@ def main():
                     f'Invalid row size of {len(user_input)}, expected: {n}. Terminating program.'
                 )
                 return
-            temp_row = [int(num) for num in user_input] # converts strings to ints
+            temp_row = [int(num)
+                        for num in user_input]  # converts strings to ints
             puzzle_grid.append(temp_row)
     else:
         print('Invalid choice, terminating program')

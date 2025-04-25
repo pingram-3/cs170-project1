@@ -33,6 +33,7 @@ def apply_swap(grid, i, j, dir):
         return copy_state
     raise InvalidMoveError(f"Error: [{newi}][{newj}] out of bounds")
 
+
 # generates the goal state of the puzzle grid
 def generate_goal(n):
     goal_state = []
