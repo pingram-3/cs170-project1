@@ -1,12 +1,11 @@
-from .tree import Node, Tree
+from .heuristics import *
+from .astar import *
 
 
 def main():
-    print("Hello from the main file")
-
-
-if __name__ == "__main__":
+    # change n to change the dimensions of the grid
     n = 3
+    #  this is the default puzzle grid, the user can choose a different puzzle if they want
     puzzle_grid = [
         [1, 2, 3],
         [4, 8, 0],
@@ -15,7 +14,7 @@ if __name__ == "__main__":
 
     # Prompt user input
     print(
-        'Welcome to nha023 and ____ 8 puzzle solver. Type “1” to use a default puzzle, or “2” to enter your own puzzle.'
+        'Welcome to nha023 and pingr002 8 puzzle solver. Type “1” to use a default puzzle, or “2” to enter your own puzzle.'
     )
     user_choice = int(input())
 
@@ -34,7 +33,8 @@ if __name__ == "__main__":
                     f'Invalid row size of {len(user_input)}, expected: {n}. Terminating program.'
                 )
                 return
-            temp_row = [int(num) for num in user_input]
+            temp_row = [int(num)
+                        for num in user_input]  # converts strings to ints
             puzzle_grid.append(temp_row)
     else:
         print('Invalid choice, terminating program')
@@ -51,16 +51,19 @@ if __name__ == "__main__":
     print('(3) A* with the Euclidean distance heuristic.')
     user_choice = int(input())
 
-    # logic to solve puzzle goes here
     if (user_choice == 1):
-        # Uniform Cost Search code goes here
-        pass
+        # uniform cost search, heuristics always return 0
+        A_star(puzzle_grid, lambda grid: 0)
     elif (user_choice == 2):
-        # A* with the Misplaced Tile heuristic code goes here
+        A_star(puzzle_grid, heuristic_misplaced_tile)
         pass
     elif (user_choice == 3):
-        # A* with the Euclidean distance heuristic code goes here
+        A_star(puzzle_grid, heuristic_euclidean_distance)
         pass
     else:
         print('Invalid choice, terminating program')
         return
+
+
+if __name__ == "__main__":
+    main()
