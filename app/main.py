@@ -4,7 +4,7 @@ from .astar import *
 
 def main():
     # change n to change the dimensions of the grid
-    n = 3
+    n = 4
     #  this is the default puzzle grid, the user can choose a different puzzle if they want
     puzzle_grid = [
         [1, 2, 3],
@@ -14,7 +14,7 @@ def main():
 
     # Prompt user input
     print(
-        'Welcome to nha023 and ____ 8 puzzle solver. Type “1” to use a default puzzle, or “2” to enter your own puzzle.'
+        'Welcome to nha023 and pingr002 8 puzzle solver. Type “1” to use a default puzzle, or “2” to enter your own puzzle.'
     )
     user_choice = int(input())
 
@@ -52,8 +52,7 @@ def main():
 
     if (user_choice == 1):
         # uniform cost search
-        zero = lambda grid : 0
-        A_star(puzzle_grid, zero)
+        A_star(puzzle_grid, lambda grid: 0)
     elif (user_choice == 2):
         A_star(puzzle_grid, heuristic_misplaced_tile)
         pass

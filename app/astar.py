@@ -5,64 +5,71 @@ from .node import *
 
 
 def A_star(grid, heuristic):
-    # initialize min heap, make the heap sort by (heuristic value) + (distance (number of moves) from starting grid)
+    # frontier list is a min heap
     frontier = []
-    heapq.heapify(frontier)
 
     # initialize visited nodes list
-    visited = []
-
-    # stores a grid as the key, and its parent as the value
-    # so we can find the path in the end
-    backtrack = {grid_to_tuple(grid): None}
+    visited = set()
 
     # add initial grid to frontier
-    heapq.heappush(frontier, (heuristic(grid), 0, grid))
+    initial_state = Node(heuristic(grid), 0, grid, None)
+    heapq.heappush(frontier, initial_state)
 
     # counts the number nodes expanded during search
     num_expanded = 0
 
     goal_state = generate_goal(len(grid))
 
-    while (len(frontier) != 0):
+    while frontier:
         current = heapq.heappop(frontier)
+        current_grid_tuple = grid_to_tuple(
+            current.grid)  # converted to tuple so we can hash it
 
-        if current[2] in visited:
+        if current_grid_tuple in visited:
             continue
-        visited.append(current[2])
+        visited.add(current_grid_tuple)
         num_expanded += 1
 
-        # found goal state, so backtrack to find the path and print it out
-        if current[2] == goal_state:
-            path = [current[2]]
-            curr_parent = backtrack[grid_to_tuple(current[2])]
-            while curr_parent != None:
-                path.append(curr_parent)
-                curr_parent = backtrack[grid_to_tuple(curr_parent)]
+        # trace algorithm running
+        print(
+            f"The best state to expand with g(n) = {current.g} and h(n) = {heuristic(current.grid)} is..."
+        )
+        for row in current.grid:
+            print(row)
+        print("Expanding this node...\n")
 
+        # found goal state, so backtrack to find the path and print it out
+        if current.grid == goal_state:
+            path = []
+            curr_parent = current
+            # backtracking
+            while curr_parent is not None:
+                path.append(curr_parent.grid)
+                curr_parent = curr_parent.parent
             path.reverse()
+            # printing path
+            print("The optimal path is: ")
             for grid in path:
                 for row in grid:
                     print(row)
                 print()
-
             print(f"Nodes Expanded: {num_expanded}")
-            print(f"Number of steps: {len(path)}")
-
+            print(f"Number of steps in optimal solution: {len(path) - 1}")
             return
 
-        blank_coords = find_blank(current[2])
+        # finds the coordinates of the empty space in the tiles
+        blank_coords = find_blank(current.grid)
 
         # branch out, checking new possibilities
         for move in Swap:
             try:
-                child = (heuristic(current[2]) + current[0], current[0] + 1,
-                         apply_swap(current[2], blank_coords[0],
-                                    blank_coords[1], move.value))
+                new_grid = apply_swap(current.grid, blank_coords[0],
+                                      blank_coords[1], move.value)
 
-                if child[2] not in visited:
+                if grid_to_tuple(new_grid) not in visited:
+                    g = current.g + 1
+                    f = heuristic(new_grid) + g
+                    child = Node(f, g, new_grid, current)
                     heapq.heappush(frontier, child)
-                    backtrack[grid_to_tuple(child[2])] = current[2]
-
             except:
                 pass
