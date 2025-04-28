@@ -3,7 +3,7 @@ from .heuristics import *
 from .helpers import *
 from .node import *
 
-MAX_FRONTIER_SIZE = 10000
+MAX_FRONTIER_SIZE = 100000
 
 
 def A_star(grid, heuristic):
